@@ -157,9 +157,12 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     thermanager
 
+<<<<<<< HEAD
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/thermal/thermanager.xml:system/etc/thermanager.xml
 
+=======
+>>>>>>> f18026a... strip out proprietary thermal engine and enable in kernel solution
 # Proprietery Firmware
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/android_model_facea.dat:system/etc/android_model_facea.dat \

@@ -164,12 +164,15 @@ service mpdecision /system/bin/mpdecision --avg_comp
     group system
     disabled
 
+<<<<<<< HEAD
 service thermanager /system/bin/thermanager /system/etc/thermanager.xml
     seclabel u:r:thermanager:s0
     class late_start
     user root
     group root
 
+=======
+>>>>>>> f18026a... strip out proprietary thermal engine and enable in kernel solution
 service time_daemon /system/bin/time_daemon
    class late_start
    user root
