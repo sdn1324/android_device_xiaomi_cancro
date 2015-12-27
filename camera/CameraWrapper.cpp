@@ -37,15 +37,13 @@
 static android::Mutex gCameraWrapperLock;
 static camera_module_t *gVendorModule = 0;
 
-<<<<<<< HEAD
-=======
 static char KEY_QC_MORPHO_HDR[] = "morpho-hdr";
 static char KEY_QC_CHROMA_FLASH[] = "chroma-flash";
 static char CHROMA_FLASH_ON[] = "chroma-flash-on";
 static char CHROMA_FLASH_OFF[] = "chroma-flash-off";
 //static char KEY_QC_CAMERA_MODE[] = "camera-mode";
 static char **fixed_set_params = NULL;
->>>>>>> 3f16268... cancro: camera: import from xiaomi
+//>>>>>>> 3f16268... cancro: camera: import from xiaomi
 static char KEY_QC_MORPHO_HDR[] = "morpho-hdr";
 static char **fixed_set_params = NULL;
 
