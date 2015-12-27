@@ -23,12 +23,12 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, device/xiaomi/cancro/cancro.mk)
 
 # Enhanced NFC
-$(call inherit-product, vendor/aokp/configs/nfc_enhanced.mk)
+$(call inherit-product, vendor/flex/configs/nfc_enhanced.mk)
 
-# Inherit some common AOKP  stuff.
-$(call inherit-product, vendor/aokp/configs/common_full_phone.mk)
+# Inherit some common flex  stuff.
+$(call inherit-product, vendor/flex/configs/common_full_phone.mk)
 
-PRODUCT_NAME := aokp_cancro
+PRODUCT_NAME := flex_cancro
 PRODUCT_DEVICE := cancro
 PRODUCT_BRAND := Xiaomi
 PRODUCT_MANUFACTURER := Xiaomi
