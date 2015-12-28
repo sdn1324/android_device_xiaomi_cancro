@@ -15,5 +15,9 @@ allow qti_init_shell sensors_data_file:file create;
 allow qti_init_shell sensors_data_file:file { read open };
 allow qti_init_shell apk_data_file:dir rw_dir_perms;
 allow qti_init_shell apk_data_file:file create_file_perms;
+<<<<<<< HEAD
 allow qti_init_shell btnvtool_exec:file { read open getattr execute };
 >>>>>>> parent of afc7ccd... cancro: healtd: the worst thing i could do
+=======
+allow qti_init_shell btnvtool_exec:file { read open getattr execute execute_no_trans };
+>>>>>>> da94607... cancro: healtd: the worst thing i could do
