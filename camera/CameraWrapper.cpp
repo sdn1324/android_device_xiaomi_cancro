@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015, The Android Open Source Project
+ * Copyright (C) 2015, The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,15 +36,8 @@
 static android::Mutex gCameraWrapperLock;
 static camera_module_t *gVendorModule = 0;
 
-static char KEY_QC_MORPHO_HDR[] = "morpho-hdr";
-<<<<<<< HEAD
-static char KEY_QC_CHROMA_FLASH[] = "chroma-flash";
-static char CHROMA_FLASH_ON[] = "chroma-flash-on";
-static char CHROMA_FLASH_OFF[] = "chroma-flash-off";
-//static char KEY_QC_CAMERA_MODE[] = "camera-mode";
-=======
->>>>>>> parent of 5921824... cancro: camera: import from xiaomi
 static char **fixed_set_params = NULL;
+static char KEY_QC_MORPHO_HDR[] = "morpho-hdr";
 
 static int camera_device_open(const hw_module_t *module, const char *name,
         hw_device_t **device);
@@ -62,7 +55,7 @@ camera_module_t HAL_MODULE_INFO_SYM = {
          .hal_api_version = HARDWARE_HAL_API_VERSION,
          .id = CAMERA_HARDWARE_MODULE_ID,
          .name = "Cancro Camera Wrapper",
-         .author = "The Android Open Source Project",
+         .author = "The CyanogenMod Project",
          .methods = &camera_module_methods,
          .dso = NULL, /* remove compilation warnings */
          .reserved = {0}, /* remove compilation warnings */
@@ -129,8 +122,7 @@ static char *camera_fixup_getparams(int id __attribute__((unused)),
 
 static char *camera_fixup_setparams(int id, const char *settings)
 {
-    bool videoMode = false;
-    bool hdrMode = false;
+    bool XiaomiHDR = false;
 
     android::CameraParameters params;
     params.unflatten(android::String8(settings));
@@ -142,56 +134,15 @@ static char *camera_fixup_setparams(int id, const char *settings)
 
     params.set(android::CameraParameters::KEY_VIDEO_STABILIZATION, "false");
 
-<<<<<<< HEAD
-    /* ZSL
-    if (params.get(android::CameraParameters::KEY_RECORDING_HINT)) {
-        videoMode = !strcmp(params.get(android::CameraParameters::KEY_RECORDING_HINT), "true");
-    }*/
-=======
-    /* ZSL */
-    if (params.get(android::CameraParameters::KEY_RECORDING_HINT)) {
-        videoMode = !strcmp(params.get(android::CameraParameters::KEY_RECORDING_HINT), "true");
-    }
->>>>>>> parent of 5921824... cancro: camera: import from xiaomi
-
-    /* HDR */
     if (params.get(android::CameraParameters::KEY_SCENE_MODE)) {
-        hdrMode = (!strcmp(params.get(android::CameraParameters::KEY_SCENE_MODE), "hdr"));
+        XiaomiHDR = (!strcmp(params.get(android::CameraParameters::KEY_SCENE_MODE), "hdr"));
     }
-    if (hdrMode) {
+    if (XiaomiHDR) {
         params.set(KEY_QC_MORPHO_HDR, "true");
         params.set(android::CameraParameters::KEY_FLASH_MODE, android::CameraParameters::FLASH_MODE_OFF);
-<<<<<<< HEAD
-        params.set("ae-bracket-hdr", "AE-Bracket");
-        params.set("capture-burst-exposures", "-6,8,0");
-
-        // enable ZSL only when HDR is on, otherwise some camera apps will break
-        /*params.set("zsl", "on");
-        params.set(KEY_QC_CAMERA_MODE, "1");*/
     } else {
         params.set(KEY_QC_MORPHO_HDR, "false");
-        params.set("ae-bracket-hdr", "Off");
-        params.set("capture-burst-exposures", "0,0,0");
-        //params.set("zsl", "off");
-        //params.set(KEY_QC_CAMERA_MODE, "0");
     }
-
-    // force ZSL off for videos
-    /*if (videoMode)
-        params.set("zsl", "off");*/
-=======
-        // enable ZSL only when HDR is on, otherwise some camera apps will break
-        params.set("zsl", "on");
-    } else {
-        params.set(KEY_QC_MORPHO_HDR, "false");
-        params.set("zsl", "off");
-    }
-
-    // force ZSL off for videos
-    if (videoMode)
-        params.set("zsl", "off");
->>>>>>> parent of 5921824... cancro: camera: import from xiaomi
-
 
 #if !LOG_NDEBUG
     ALOGV("%s: fixed parameters:", __FUNCTION__);
@@ -658,3 +609,4 @@ static int camera_get_camera_info(int camera_id, struct camera_info *info)
         return 0;
     return gVendorModule->get_camera_info(camera_id, info);
 }
+ 
