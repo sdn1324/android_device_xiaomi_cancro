@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015, The Android Open Source Project
+ * Copyright (C) 2015, The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 *
 */
 
-#define LOG_NDEBUG 1
+#define LOG_NDEBUG 0
 
 #define LOG_TAG "CameraWrapper"
 #include <cutils/log.h>
@@ -33,28 +33,16 @@
 #include <camera/Camera.h>
 #include <camera/CameraParameters.h>
 
-
 static android::Mutex gCameraWrapperLock;
 static camera_module_t *gVendorModule = 0;
 
-<<<<<<< HEAD
-=======
-static char KEY_QC_MORPHO_HDR[] = "morpho-hdr";
-static char KEY_QC_CHROMA_FLASH[] = "chroma-flash";
-static char CHROMA_FLASH_ON[] = "chroma-flash-on";
-static char CHROMA_FLASH_OFF[] = "chroma-flash-off";
-//static char KEY_QC_CAMERA_MODE[] = "camera-mode";
 static char **fixed_set_params = NULL;
->>>>>>> 3f16268... cancro: camera: import from xiaomi
 static char KEY_QC_MORPHO_HDR[] = "morpho-hdr";
-static char **fixed_set_params = NULL;
 
 static int camera_device_open(const hw_module_t *module, const char *name,
         hw_device_t **device);
 static int camera_get_number_of_cameras(void);
 static int camera_get_camera_info(int camera_id, struct camera_info *info);
-static int camera_send_command(struct camera_device * device, int32_t cmd,
-                int32_t arg1, int32_t arg2);
 
 static struct hw_module_methods_t camera_module_methods = {
     .open = camera_device_open
@@ -67,7 +55,7 @@ camera_module_t HAL_MODULE_INFO_SYM = {
          .hal_api_version = HARDWARE_HAL_API_VERSION,
          .id = CAMERA_HARDWARE_MODULE_ID,
          .name = "Cancro Camera Wrapper",
-         .author = "The Android Open Source Project",
+         .author = "The CyanogenMod Project",
          .methods = &camera_module_methods,
          .dso = NULL, /* remove compilation warnings */
          .reserved = {0}, /* remove compilation warnings */
@@ -77,8 +65,8 @@ camera_module_t HAL_MODULE_INFO_SYM = {
     .set_callbacks = NULL, /* remove compilation warnings */
     .get_vendor_tag_ops = NULL, /* remove compilation warnings */
     .open_legacy = NULL, /* remove compilation warnings */
-    .set_torch_mode = NULL,
-    .init = NULL,
+    .set_torch_mode = NULL, /* remove compilation warnings */
+    .init = NULL, /* remove compilation warnings */
     .reserved = {0}, /* remove compilation warnings */
 };
 
@@ -134,8 +122,7 @@ static char *camera_fixup_getparams(int id __attribute__((unused)),
 
 static char *camera_fixup_setparams(int id, const char *settings)
 {
-    bool videoMode = false;
-    bool hdrMode = false;
+    bool XiaomiHDR = false;
 
     android::CameraParameters params;
     params.unflatten(android::String8(settings));
@@ -147,56 +134,15 @@ static char *camera_fixup_setparams(int id, const char *settings)
 
     params.set(android::CameraParameters::KEY_VIDEO_STABILIZATION, "false");
 
-<<<<<<< HEAD
-    /* ZSL */
-    if (params.get(android::CameraParameters::KEY_RECORDING_HINT)) {
-        videoMode = !strcmp(params.get(android::CameraParameters::KEY_RECORDING_HINT), "true");
-    }
-=======
-    /* ZSL
-    if (params.get(android::CameraParameters::KEY_RECORDING_HINT)) {
-        videoMode = !strcmp(params.get(android::CameraParameters::KEY_RECORDING_HINT), "true");
-    }*/
->>>>>>> 3f16268... cancro: camera: import from xiaomi
-
-    /* HDR */
     if (params.get(android::CameraParameters::KEY_SCENE_MODE)) {
-        hdrMode = (!strcmp(params.get(android::CameraParameters::KEY_SCENE_MODE), "hdr"));
+        XiaomiHDR = (!strcmp(params.get(android::CameraParameters::KEY_SCENE_MODE), "hdr"));
     }
-    if (hdrMode) {
+    if (XiaomiHDR) {
         params.set(KEY_QC_MORPHO_HDR, "true");
         params.set(android::CameraParameters::KEY_FLASH_MODE, android::CameraParameters::FLASH_MODE_OFF);
-<<<<<<< HEAD
-        // enable ZSL only when HDR is on, otherwise some camera apps will break
-        params.set("zsl", "on");
     } else {
         params.set(KEY_QC_MORPHO_HDR, "false");
-        params.set("zsl", "off");
     }
-
-    // force ZSL off for videos
-    if (videoMode)
-        params.set("zsl", "off");
-=======
-        params.set("ae-bracket-hdr", "AE-Bracket");
-        params.set("capture-burst-exposures", "-6,8,0");
-
-        // enable ZSL only when HDR is on, otherwise some camera apps will break
-        /*params.set("zsl", "on");
-        params.set(KEY_QC_CAMERA_MODE, "1");*/
-    } else {
-        params.set(KEY_QC_MORPHO_HDR, "false");
-        params.set("ae-bracket-hdr", "Off");
-        params.set("capture-burst-exposures", "0,0,0");
-        //params.set("zsl", "off");
-        //params.set(KEY_QC_CAMERA_MODE, "0");
-    }
-
-    // force ZSL off for videos
-    /*if (videoMode)
-        params.set("zsl", "off");*/
->>>>>>> 3f16268... cancro: camera: import from xiaomi
-
 
 #if !LOG_NDEBUG
     ALOGV("%s: fixed parameters:", __FUNCTION__);
@@ -663,3 +609,4 @@ static int camera_get_camera_info(int camera_id, struct camera_info *info)
         return 0;
     return gVendorModule->get_camera_info(camera_id, info);
 }
+ 

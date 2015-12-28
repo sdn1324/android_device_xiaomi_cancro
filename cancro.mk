@@ -8,14 +8,12 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 PRODUCT_CHARACTERISTICS := nosdcard
 
 # Charger
-<<<<<<< HEAD
 PRODUCT_PACKAGES += \
     charger_res_images
-=======
+    
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/root/chargeonlymode:root/sbin/chargeonlymode
->>>>>>> 0384325... Revert "switch to healthd"
-
+    
 # Quick charging
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.usb.hvdcp.detect=true
