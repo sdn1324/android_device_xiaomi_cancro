@@ -21,7 +21,7 @@
 *
 */
 
-#define LOG_NDEBUG 1
+#define LOG_NDEBUG 0
 
 #define LOG_TAG "CameraWrapper"
 #include <cutils/log.h>
@@ -37,10 +37,13 @@ static android::Mutex gCameraWrapperLock;
 static camera_module_t *gVendorModule = 0;
 
 static char KEY_QC_MORPHO_HDR[] = "morpho-hdr";
+<<<<<<< HEAD
 static char KEY_QC_CHROMA_FLASH[] = "chroma-flash";
 static char CHROMA_FLASH_ON[] = "chroma-flash-on";
 static char CHROMA_FLASH_OFF[] = "chroma-flash-off";
 //static char KEY_QC_CAMERA_MODE[] = "camera-mode";
+=======
+>>>>>>> parent of 5921824... cancro: camera: import from xiaomi
 static char **fixed_set_params = NULL;
 
 static int camera_device_open(const hw_module_t *module, const char *name,
@@ -139,10 +142,17 @@ static char *camera_fixup_setparams(int id, const char *settings)
 
     params.set(android::CameraParameters::KEY_VIDEO_STABILIZATION, "false");
 
+<<<<<<< HEAD
     /* ZSL
     if (params.get(android::CameraParameters::KEY_RECORDING_HINT)) {
         videoMode = !strcmp(params.get(android::CameraParameters::KEY_RECORDING_HINT), "true");
     }*/
+=======
+    /* ZSL */
+    if (params.get(android::CameraParameters::KEY_RECORDING_HINT)) {
+        videoMode = !strcmp(params.get(android::CameraParameters::KEY_RECORDING_HINT), "true");
+    }
+>>>>>>> parent of 5921824... cancro: camera: import from xiaomi
 
     /* HDR */
     if (params.get(android::CameraParameters::KEY_SCENE_MODE)) {
@@ -151,6 +161,7 @@ static char *camera_fixup_setparams(int id, const char *settings)
     if (hdrMode) {
         params.set(KEY_QC_MORPHO_HDR, "true");
         params.set(android::CameraParameters::KEY_FLASH_MODE, android::CameraParameters::FLASH_MODE_OFF);
+<<<<<<< HEAD
         params.set("ae-bracket-hdr", "AE-Bracket");
         params.set("capture-burst-exposures", "-6,8,0");
 
@@ -168,6 +179,18 @@ static char *camera_fixup_setparams(int id, const char *settings)
     // force ZSL off for videos
     /*if (videoMode)
         params.set("zsl", "off");*/
+=======
+        // enable ZSL only when HDR is on, otherwise some camera apps will break
+        params.set("zsl", "on");
+    } else {
+        params.set(KEY_QC_MORPHO_HDR, "false");
+        params.set("zsl", "off");
+    }
+
+    // force ZSL off for videos
+    if (videoMode)
+        params.set("zsl", "off");
+>>>>>>> parent of 5921824... cancro: camera: import from xiaomi
 
 
 #if !LOG_NDEBUG
