@@ -12,4 +12,8 @@ allow init self:netlink_kobject_uevent_socket { read bind create setopt };
 allow init self:socket { write read create ioctl };
 allow init sensors_device:chr_file getattr;
 allow init sensors_socket:sock_file write;
+<<<<<<< HEAD
 allow init sensors:unix_stream_socket connectto;
+=======
+allow init firmware_file:dir mounton;
+>>>>>>> parent of afc7ccd... cancro: healtd: the worst thing i could do

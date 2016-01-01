@@ -836,10 +836,6 @@ on property:usb_uicc.spi_bridge_enabled=0
 
 service charger /sbin/chargeonlymode
     class charger
-<<<<<<< HEAD
-=======
-    seclabel u:r:chargeonlymode:s0
->>>>>>> da94607... cancro: healtd: the worst thing i could do
 
 service ssr_diag /system/bin/ssr_diag
     class late_start
