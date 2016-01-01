@@ -1,22 +1,14 @@
 /data/cam_socket.*                                           u:object_r:camera_socket:s0
 /dev/bcm2079x                                                u:object_r:nfc_device:s0
-<<<<<<< HEAD
 /dev/block/platform/msm_sdcc\.1/by-name/persist   u:object_r:persist_block_device:s0 
-<<<<<<< HEAD
-=======
 /dev/block/platform/msm_sdcc\.1/by-name/persist              u:object_r:persist_block_device:s0
 /sbin/chargeonlymode                                         u:object_r:chargeonlymode:s0
-<<<<<<< HEAD
->>>>>>> da94607... cancro: healtd: the worst thing i could do
-=======
+
 /sys/devices/virtual/graphics/fb0/color_enhance              u:object_r:display_sysfs:s0
->>>>>>> e08c49f... cancro: sepolicy: round 2
-=======
->>>>>>> parent of afc7ccd... cancro: healtd: the worst thing i could do
-=======
+
+
 /dev/block/platform/msm_sdcc\.1/by-name/persist              u:object_r:persist_block_device:s0
 /sbin/chargeonlymode                                         u:object_r:chargeonlymode:s0
->>>>>>> da94607... cancro: healtd: the worst thing i could do
 
 #============= cmhw ==============
 /sys/vibrator/pwmvalue                                       u:object_r:vibeamp_sysfs:s0

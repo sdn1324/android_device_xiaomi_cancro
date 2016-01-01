@@ -1,6 +1,3 @@
 #============= fsck ==============
-<<<<<<< HEAD
 allow fsck persist_block_device:blk_file rw_file_perms; 
-=======
 allow fsck persist_block_device:blk_file { read write open ioctl };
->>>>>>> e08c49f... cancro: sepolicy: round 2
