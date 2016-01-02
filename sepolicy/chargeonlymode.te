@@ -2,7 +2,6 @@
 type chargeonlymode, domain;
 
 allow chargeonlymode console_device:chr_file { read write open };
-<<<<<<< HEAD
 allow chargeonlymode device:chr_file { create unlink };
 allow chargeonlymode device:dir { write remove_name add_name };
 allow chargeonlymode graphics_device:chr_file { read write open ioctl };
@@ -15,7 +14,6 @@ allow chargeonlymode sysfs_battery_supply:file { read open };
 allow chargeonlymode sysfs_battery_supply:dir search;
 allow chargeonlymode sysfs_usb_supply:dir search;
 allow chargeonlymode sysfs_usb_supply:file { read open };
-=======
 allow chargeonlymode graphics_device:chr_file { read write open ioctl };
 allow chargeonlymode rootfs:file entrypoint;
 allow chargeonlymode self:capability sys_boot;
@@ -30,4 +28,3 @@ allow chargeonlymode sysfs_battery_supply:file { read open };
 allow chargeonlymode device:chr_file { create unlink };
 allow chargeonlymode device:dir { write remove_name add_name };
 allow chargeonlymode graphics_device:dir search;
->>>>>>> da94607... cancro: healtd: the worst thing i could do
